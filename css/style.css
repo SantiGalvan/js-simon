@@ -8,4 +8,18 @@
 /* General */
 body {
     font-family: 'Montserrat', sans-serif;
+    background-color: ghostwhite;
+}
+
+/*? Main */
+
+/* Section Number */
+#number {
+    margin: 100px 0;
+}
+
+.numbers {
+    font-size: 50px;
+    font-weight: 700;
+    color: rgb(10, 10, 10);
 }
