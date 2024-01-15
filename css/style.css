@@ -11,6 +11,10 @@ body {
     background-color: ghostwhite;
 }
 
+ul {
+    list-style: none;
+}
+
 /*? Main */
 
 /* Section Number */
