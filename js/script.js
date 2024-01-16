@@ -49,15 +49,6 @@ buttonStart.addEventListener('click', () => {
             numberBox.innerHTML = '';
             textElement.innerText = 'Inserisci i numeri che ti ricordi';
 
-            // - 13 Inserisco gli input 
-            inputGroup.innerHTML = `
-             <input type="number" class="form-control" required min=${min} max=${max}>
-             <input type="number" class="form-control" required min=${min} max=${max}>
-             <input type="number" class="form-control" required min=${min} max=${max}>
-             <input type="number" class="form-control" required min=${min} max=${max}>
-             <input type="number" class="form-control" required min=${min} max=${max}>
-        `;
-
             // - 14 Mostro il form
             formField.classList.remove('d-none');
         }
@@ -72,19 +63,45 @@ buttonStart.addEventListener('click', () => {
     // - 11 Inserisco i numeri random in pagina
     const randomNumbers = getRandomNumber(min, max, totalNumber);
     let numbersItems = ``;
+    let input = ``;
     for (let number of randomNumbers) {
         numbersItems += `
     <li class="numbers">${number}</li>
     `;
+        // - 13 Creo gli input 
+        input += `
+    <input type="number" class="form-control" required min=${min} max=${max}>`;
     }
-    numberBox.innerHTML = numbersItems;
 
-    // - 13 Inserisco gli input 
-    inputGroup.innerHTML = `
-<input type="number" class="form-control" required min=${min} max=${max}>
-<input type="number" class="form-control" required min=${min} max=${max}>
-<input type="number" class="form-control" required min=${min} max=${max}>
-<input type="number" class="form-control" required min=${min} max=${max}>
-<input type="number" class="form-control" required min=${min} max=${max}>
-    `;
+    numberBox.innerHTML = numbersItems;
+    inputGroup.innerHTML = input;
+    const inputFields = document.querySelectorAll('input');
+
+    formField.addEventListener('submit', (e) => {
+        // - 15 Prevengo l'invio del form
+        e.preventDefault();
+
+        // - 16 Array per i valori dell'utente
+        const userGuesses = [];
+
+        // - 17 Recupero il valore da gli input
+        for (let field of inputFields) {
+            const inputValue = parseInt(field.value);
+
+            // - 18 Validazione su gli input
+            if (!isNaN(inputValue) && inputValue >= min && inputValue <= max && !userGuesses.includes(inputValue)) {
+
+                // - 19 Pusho il value nell'array
+                userGuesses.push(inputValue);
+            }
+        }
+
+        // - 20 Validazione sulla lunghezza dell'array
+        if (userGuesses.length !== totalNumber) {
+            endText.classList.add('text-danger');
+            endText.innerText = 'Ci sono valori non validi o duplicati';
+        }
+    })
+
+
 });
